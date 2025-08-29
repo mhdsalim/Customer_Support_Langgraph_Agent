@@ -1,0 +1,128 @@
+agent:
+  name: "Langie"
+  description: "A structured and logical Lang Graph Agent that models customer support workflows as graph-based stages."
+  persona: |
+    You are Langie, a structured and logical Lang Graph Agent.
+    - You think in stages: each node represents a clear phase of the workflow.
+    - You carefully carry forward state variables from one stage to the next.
+    - You always know whether to execute sequentially (deterministic) or to choose dynamically (non-deterministic).
+    - You orchestrate MCP clients to call either Atlas or Common servers as needed.
+    - You log every decision clearly and output a final structured payload.
+
+input_schema:
+  type: object
+  properties:
+    customer_name: { type: string }
+    email: { type: string }
+    query: { type: string }
+    priority: { type: string }
+    ticket_id: { type: string }
+  required: [customer_name, email, query, ticket_id]
+
+stages:
+  - name: "INTAKE"
+    mode: "deterministic"
+    [cite_start]description: "Accept the initial customer payload." [cite: 22]
+    abilities:
+      - name: "accept_payload"
+        mcp_server: "N/A" # Initial data entry
+        [cite_start]description: "Capture incoming request payload." [cite: 84]
+
+  - name: "UNDERSTAND"
+    [cite_start]mode: "deterministic" [cite: 85]
+    [cite_start]description: "Parse and extract key information from the user query." [cite: 24]
+    abilities:
+      - name: "parse_request_text"
+        [cite_start]mcp_server: "COMMON" [cite: 86]
+        [cite_start]description: "Convert unstructured request to structured data." [cite: 86]
+      - name: "extract_entities"
+        [cite_start]mcp_server: "ATLAS" [cite: 87]
+        [cite_start]description: "Identify product, account, dates from the text." [cite: 87]
+
+  - name: "PREPARE"
+    [cite_start]mode: "deterministic" [cite: 88]
+    [cite_start]description: "Normalize and enrich the data for processing." [cite: 25]
+    abilities:
+      - name: "normalize_fields"
+        [cite_start]mcp_server: "COMMON" [cite: 89]
+        [cite_start]description: "Standardize dates, codes, and IDs." [cite: 89]
+      - name: "enrich_records"
+        [cite_start]mcp_server: "ATLAS" [cite: 90]
+        [cite_start]description: "Add SLA and historical ticket information." [cite: 90]
+      - name: "add_flags_calculations"
+        [cite_start]mcp_server: "COMMON" [cite: 91]
+        [cite_start]description: "Compute priority or SLA risk." [cite: 91]
+
+  - name: "ASK"
+    [cite_start]mode: "human_in_loop" [cite: 92]
+    [cite_start]description: "If information is missing, formulate a clarifying question for the user." [cite: 26]
+    abilities:
+      - name: "clarify_question"
+        [cite_start]mcp_server: "ATLAS" [cite: 93]
+        [cite_start]description: "Request missing information from the customer." [cite: 93]
+
+  - name: "WAIT"
+    [cite_start]mode: "deterministic" [cite: 94]
+    [cite_start]description: "Wait for the user's response and extract the answer." [cite: 27]
+    abilities:
+      - name: "extract_answer"
+        [cite_start]mcp_server: "ATLAS" [cite: 95]
+        [cite_start]description: "Capture and process the concise response from the user." [cite: 95]
+
+  - name: "RETRIEVE"
+    [cite_start]mode: "deterministic" [cite: 97]
+    [cite_start]description: "Search for relevant information in the knowledge base." [cite: 28]
+    abilities:
+      - name: "knowledge_base_search"
+        [cite_start]mcp_server: "ATLAS" [cite: 99]
+        [cite_start]description: "Look up relevant articles or FAQs." [cite: 99]
+
+  - name: "DECIDE"
+    [cite_start]mode: "non-deterministic" [cite: 101]
+    [cite_start]description: "Evaluate solutions and decide on the next steps, such as escalation." [cite: 29]
+    [cite_start]prompt: "Based on the retrieved knowledge, score the potential solution. If the score is less than 90, decide to escalate." [cite: 52, 103]
+    abilities:
+      - name: "solution_evaluation"
+        [cite_start]mcp_server: "COMMON" [cite: 102]
+        [cite_start]description: "Score potential solutions on a scale of 1-100." [cite: 102]
+      - name: "escalation_decision"
+        [cite_start]mcp_server: "ATLAS" [cite: 103]
+        [cite_start]description: "Assign the ticket to a human agent if the solution score is below 90." [cite: 103]
+
+  - name: "UPDATE"
+    [cite_start]mode: "deterministic" [cite: 104]
+    [cite_start]description: "Update the ticket in the external system." [cite: 30, 32]
+    abilities:
+      - name: "update_ticket"
+        [cite_start]mcp_server: "ATLAS" [cite: 105]
+        [cite_start]description: "Modify the ticket's status, fields, or priority." [cite: 105]
+      - name: "close_ticket"
+        [cite_start]mcp_server: "ATLAS" [cite: 106]
+        [cite_start]description: "Mark the issue as resolved if applicable." [cite: 106]
+
+  - name: "CREATE"
+    [cite_start]mode: "deterministic" [cite: 107]
+    [cite_start]description: "Generate the final response for the customer." [cite: 31, 33]
+    abilities:
+      - name: "response_generation"
+        [cite_start]mcp_server: "COMMON" [cite: 108]
+        [cite_start]description: "Draft a clear and helpful reply to the customer." [cite: 108]
+
+  - name: "DO"
+    mode: "deterministic"
+    [cite_start]description: "Execute final actions like API calls and notifications." [cite: 34]
+    abilities:
+      - name: "execute_api_calls"
+        [cite_start]mcp_server: "ATLAS" [cite: 110]
+        [cite_start]description: "Trigger actions in external CRM or order systems." [cite: 110]
+      - name: "trigger_notifications"
+        [cite_start]mcp_server: "ATLAS" [cite: 111]
+        [cite_start]description: "Send a notification to the customer." [cite: 111]
+
+  - name: "COMPLETE"
+    mode: "deterministic"
+    [cite_start]description: "Output the final, structured payload." [cite: 35, 36]
+    abilities:
+      - name: "output_payload"
+        mcp_server: "N/A" # Final state output
+        [cite_start]description: "Present the final structured payload." [cite: 113]

@@ -1,0 +1,45 @@
+{
+    "customer_name": "Jane Smith",
+    "email": "jane.smith@email.com",
+    "query": "I am not able to login to my account",
+    "priority": "High",
+    "ticket_id": "TICKET-1234",
+    "structured_query": {
+        "status": "success",
+        "source": "COMMON"
+    },
+    "entities": {
+        "status": "success",
+        "source": "ATLAS"
+    },
+    "enrichment_data": {
+        "status": "success",
+        "source": "ATLAS"
+    },
+    "sla_risk": {
+        "status": "success",
+        "source": "COMMON"
+    },
+    "clarification": null,
+    "retrieved_data": {
+        "data": "data",
+        "key": "key",
+        "value": "value"
+    },
+    "solution_score": 85,
+    "escalated": true,
+    "final_response": "Your issue will be resolved soon",
+    "execution_log": [
+        "Payload accepted.",
+        "Query parsed and entities extracted.",
+        "Data normalized, enriched, and flags calculated.",
+        "No clarification needed.",
+        "No clarification was needed, skipping WAIT.",
+        "Knowledge base searched and data stored.",
+        "Decision made: Escalate (Score: 85)",
+        "Ticket status updated to Escalated.",
+        "Customer response generated.",
+        "Final API calls executed and notifications sent.",
+        "Workflow finished and payload output."
+    ]
+}
