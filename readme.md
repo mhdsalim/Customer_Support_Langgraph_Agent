@@ -39,7 +39,7 @@ lang-graph-customer-agent/
 │   └── workflow.py        # Core LangGraph implementation
 │
 └── output/
-    └── ...                # Final JSON outputs are saved here
+    └──                # Final JSON outputs are saved here
 
 ⚙️ Getting Started
 Follow these instructions to set up and run the project locally.
@@ -129,3 +129,4 @@ COMPLETE: Outputs the final structured payload.
 📜 Configuration
 
 The agent's behavior is defined in config.yaml. This file specifies the agent's persona and lists the stages of the workflow. This allows for easy modification of the agent's structure without changing the core code.
+
