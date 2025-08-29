@@ -1,5 +1,3 @@
----
-
 # 🤖 LangGraph Customer Support Agent
 
 This project implements a **multi-stage customer support agent** using **LangGraph**. It models a complex support workflow as a graph, where each node represents a distinct stage in the process.
@@ -132,4 +130,5 @@ The agent’s behavior is defined in **`config.yaml`**.
 * Allows modifying the workflow without changing core code
 
 ---
+
 
