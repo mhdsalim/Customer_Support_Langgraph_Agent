@@ -23,24 +23,24 @@ Structured Output: The agent processes an initial query and generates a structur
 The project is organized to separate configuration, source code, and data for clarity and maintainability.
 
 lang-graph-customer-agent/
-│
-├── .env                  # Stores the GOOGLE_API_KEY
-├── config.yaml           # Defines the agent's stages and persona
-├── requirements.txt      # Project dependencies
-├── README.md             # You are here!
-├── run_demo.py           # Main script to run the agent
+├── .env                 # Stores environment variables (e.g., GOOGLE_API_KEY)
+├── config.yaml          # Defines the agent's persona, stages, and workflow
+├── requirements.txt     # Project dependencies
+├── README.md            # Project documentation (you are here!)
+├── run_demo.py          # Main script to run the agent
 │
 ├── data/
-│   └── sample_query.json # Sample input for the demo
+│   └── sample_query.json   # Sample input for the demo
 │
 ├── agent/
 │   ├── __init__.py
-│   ├── state.py          # Defines the AgentState object
-│   ├── abilities.py      # Mocks MCP clients and defines all tools
-│   └── workflow.py       # Core LangGraph implementation
+│   ├── state.py           # Defines the AgentState object
+│   ├── abilities.py       # Mocks MCP clients and defines available tools
+│   └── workflow.py        # Core LangGraph implementation
 │
 └── output/
-    └── ...               # Final JSON outputs are saved here
+    └── ...                # Final JSON outputs are saved here
+
 ⚙️ Getting Started
 Follow these instructions to set up and run the project locally.
 
@@ -127,4 +127,5 @@ DO: Executes final API calls and triggers notifications.
 COMPLETE: Outputs the final structured payload. 
 
 📜 Configuration
+
 The agent's behavior is defined in config.yaml. This file specifies the agent's persona and lists the stages of the workflow. This allows for easy modification of the agent's structure without changing the core code.
