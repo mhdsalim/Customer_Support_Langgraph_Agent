@@ -6,35 +6,19 @@
     "ticket_id": "TICKET-1234",
     "structured_query": {
         "status": "success",
-        "source": "COMMON",
-        "ability": "parse_request_text",
-        "debug": {
-            "query": "I am not able to login to my account"
-        }
+        "source": "COMMON"
     },
     "entities": {
         "status": "success",
-        "source": "ATLAS",
-        "ability": "extract_entities",
-        "debug": {
-            "text": "I am not able to login to my account"
-        }
+        "source": "ATLAS"
     },
     "enrichment_data": {
         "status": "success",
-        "source": "ATLAS",
-        "ability": "enrich_records",
-        "debug": {
-            "ticket_id": "TICKET-1234"
-        }
+        "source": "ATLAS"
     },
     "sla_risk": {
         "status": "success",
-        "source": "COMMON",
-        "ability": "add_flags_calculations",
-        "debug": {
-            "priority": "High"
-        }
+        "source": "COMMON"
     },
     "clarification": null,
     "retrieved_data": {
